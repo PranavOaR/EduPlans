@@ -251,6 +251,10 @@ body {
 }
 
 .feature-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 300px;
     padding: 2rem;
     border-radius: 20px;
     transition: all 0.3s ease;
@@ -264,13 +268,18 @@ body {
 .feature-btn {
     display: inline-block;
     padding: 0.8rem 2rem;
+    margin-top: auto; /* Pushes button to bottom */
     background: linear-gradient(145deg, var(--light-blue), var(--accent-blue));
     color: white;
     text-decoration: none;
     border-radius: 25px;
     font-weight: 500;
     transition: all 0.3s ease;
+    text-align: center;
     border: none;
+    width: 80%; /* Control button width */
+    margin-left: auto;
+    margin-right: auto;
     box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
 }
 
@@ -307,14 +316,15 @@ body {
 
 /* CTA Section */
 .cta {
-    background-color: var(--card-bg);
-    padding: 6rem 2rem;
     text-align: center;
+    padding: 6rem 2rem;
+    background: radial-gradient(circle at center, rgba(26, 35, 126, 0.2) 0%, var(--dark-bg) 100%);
 }
 
 .cta-button {
     display: inline-block;
     padding: 1rem 3rem;
+    margin-top: 2rem;
     background: linear-gradient(145deg, var(--light-blue), var(--accent-blue));
     color: white;
     text-decoration: none;
@@ -322,9 +332,9 @@ body {
     font-weight: 600;
     font-size: 1.1rem;
     transition: all 0.3s ease;
+    min-width: 200px;
     border: none;
     box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
-    margin-top: 2rem;
 }
 
 .cta-button:hover {

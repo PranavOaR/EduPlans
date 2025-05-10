@@ -46,6 +46,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Add logout handler
+    const logoutBtnAlt = document.querySelector('.logout-btn');
+    if (logoutBtnAlt) {
+        logoutBtnAlt.addEventListener('click', () => {
+            // Add fade out animation
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+
+            setTimeout(() => {
+                // Clear local storage
+                localStorage.removeItem('token');
+                localStorage.removeItem('username');
+                
+                // Redirect to login page
+                window.location.href = 'login.html';
+            }, 500);
+        });
+    }
+
     // Handle home link click
     const homeLink = document.querySelector('a[href="home.html"]');
     if (homeLink) {
