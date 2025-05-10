@@ -1,0 +1,67 @@
+\signup.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - EduPlan</title>
+    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="signup-container">
+        <div class="particle-container"></div>
+        <div class="signup-card">
+            <div class="logo-section">
+                <img src="edu.png" alt="EduPlan Logo" class="signup-logo">
+                <h1>EduPlan</h1>
+            </div>
+            <form id="signupForm" class="signup-form">
+                <div class="input-group">
+                    <input type="text" id="firstName" placeholder="First Name" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="lastName" placeholder="Last Name" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Username" required>
+                    <i class="fas fa-at"></i>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="input-group">
+                    <input type="tel" id="mobile" placeholder="Mobile Number" required>
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <button type="submit" class="signup-btn">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+            <div class="form-footer">
+                <a href="login.html">Already have an account? Login</a>
+            </div>
+        </div>
+    </div>
+    <script src="signup.js"></script>
+    <script>
+        // Add particles
+        const container = document.querySelector('.particle-container');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 2}s`;
+            container.appendChild(particle);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+anner.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic Planner - EduPlan</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="planner.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="edu.png" alt="EduPlan Logo" class="logo-img">
+            <a href="index.html" class="logo">EduPlan</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="pomodoro.html">Pomodoro Timer</a></li>
+            <li><a href="planner.html" class="active">Topic Planner</a></li>
+        </ul>
+    </nav>
+
+    <div class="planner-wrapper">
+        <div class="planner-container">
+            <div class="add-task-section">
+                <h2>Add New Task</h2>
+                <form id="task-form">
+                    <input type="text" id="task-title" placeholder="Task Title" required>
+                    <select id="task-subject" required>
+                        <option value="">Select Subject</option>
+                        <option value="math">Mathematics</option>
+                        <option value="science">Science</option>
+                        <option value="english">English</option>
+                        <option value="history">History</option>
+                    </select>
+                    <input type="date" id="task-due-date" required>
+                    <select id="task-priority" required>
+                        <option value="low">Low Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="high">High Priority</option>
+                    </select>
+                    <textarea id="task-description" placeholder="Task Description" required></textarea>
+                    <button type="submit" class="add-btn">
+                        <i class="fas fa-plus"></i> Add Task
+                    </button>
+                </form>
+            </div>
+
+            <div class="tasks-container">
+                <div class="tasks-header">
+                    <h2>Your Tasks</h2>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="pending">Pending</button>
+                        <button class="filter-btn" data-filter="completed">Completed</button>
+                    </div>
+                </div>
+                <div id="tasks-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="planner.js"></script>
+</body>
+</html>
