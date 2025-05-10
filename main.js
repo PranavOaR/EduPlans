@@ -23,14 +23,31 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(card);
     });
 
+    // Handle nav link clicks
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Add fade out animation
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            // Redirect after animation
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 500);
+        });
+    });
+
     // Add hover effect to nav links
     const navLinks = document.querySelectorAll('.nav-links a');
     navLinks.forEach(link => {
         link.addEventListener('mouseover', (e) => {
-            link.style.textShadow = '0 0 10px rgba(0, 188, 212, 0.5)';
+            link.style.transform = 'translateY(-2px)';
         });
+        
         link.addEventListener('mouseout', (e) => {
-            link.style.textShadow = 'none';
+            link.style.transform = 'translateY(0)';
         });
     });
 
