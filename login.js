@@ -62,8 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Attempting login for: ${email}`);
         
         try {
+            // Get the API URL from config
+            const apiUrl = window.apiConfig ? 
+                window.apiConfig.getUrl(window.apiConfig.endpoints.auth.login) : 
+                'http://localhost:5000/api/auth/login';
+            
+            console.log('Using API URL:', apiUrl);
+            
             // Make the API call
-            const response = await fetch('http://localhost:5000/api/auth/login', {
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

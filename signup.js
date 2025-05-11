@@ -22,7 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         try {
-            const response = await fetch('http://localhost:5000/api/auth/signup', {
+            // Get the API URL from config
+            const apiUrl = window.apiConfig ? 
+                window.apiConfig.getUrl(window.apiConfig.endpoints.auth.signup) : 
+                'http://localhost:5000/api/auth/signup';
+            
+            console.log('Using API URL:', apiUrl);
+            
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -35,6 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('username', data.user.username);
+                // Also store full user data
+                localStorage.setItem('userData', JSON.stringify(data.user));
                 showSuccess('Account created successfully!');
                 setTimeout(() => {
                     window.location.href = 'home.html';
