@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Create advanced particle effect
+    createParticles();
+    
     const signupForm = document.getElementById('signupForm');
     const signupBtn = signupForm.querySelector('.signup-btn');
     
@@ -76,3 +79,38 @@ document.addEventListener('DOMContentLoaded', () => {
         signupForm.insertBefore(errorDiv, signupForm.firstChild);
     }
 });
+
+function createParticles() {
+    const container = document.querySelector('.particle-container');
+    if (!container) return;
+    
+    const particleCount = 50;
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Random size between 2-6px
+        const size = Math.random() * 4 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Random position
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        
+        // Set up for animation
+        const tx = (Math.random() - 0.5) * 300;
+        const ty = (Math.random() - 0.5) * 300;
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        // Random animation duration and delay
+        const duration = Math.random() * 10 + 10;
+        const delay = Math.random() * 5;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        
+        container.appendChild(particle);
+    }
+}

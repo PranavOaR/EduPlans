@@ -1,31 +1,110 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Home page loaded. Checking authentication...');
+    
     // Check if user is logged in
     const token = localStorage.getItem('token');
-    const username = localStorage.getItem('username');
+    let userData = null;
+    
+    try {
+        userData = JSON.parse(localStorage.getItem('userData') || "{}");
+    } catch (e) {
+        console.error('Error parsing userData from localStorage:', e);
+    }
+    
+    const username = userData?.username;
 
+    // Redirect to login if not authenticated
     if (!token || !username) {
+        console.warn('Not authenticated, redirecting to login page');
         window.location.href = 'login.html';
         return;
     }
+    
+    console.log('User authenticated, username:', username);
 
-    // Display username
-    const userDisplayName = document.getElementById('userDisplayName');
-    if (userDisplayName) {
-        userDisplayName.textContent = username;
+    // Initialize particles
+    createParticles();
+
+    // Display welcome message with typewriter effect
+    const welcomeMessage = document.getElementById('welcomeMessage');
+    const typingContainer = document.querySelector('.typing-container');
+    
+    if (welcomeMessage && typingContainer) {
+        // Prepare the welcome message with formatted username
+        const fullMessage = `Welcome Back, <span class="username">${username}</span>!`;
+        
+        // First, set the full message for users with JavaScript disabled
+        welcomeMessage.innerHTML = fullMessage;
+        
+        // Then implement typewriter effect
+        setTimeout(() => {
+            welcomeMessage.innerHTML = '';
+            let textParts = [
+                { text: 'Welcome Back, ', isHTML: false },
+                { text: `<span class="username">${username}</span>`, isHTML: true },
+                { text: '!', isHTML: false }
+            ];
+            
+            let currentPart = 0;
+            let currentChar = 0;
+            let isTyping = true;
+            
+            const typeChar = () => {
+                if (isTyping) {
+                    if (currentPart < textParts.length) {
+                        const part = textParts[currentPart];
+                        
+                        if (part.isHTML) {
+                            // For HTML parts, add the whole thing at once
+                            welcomeMessage.innerHTML += part.text;
+                            currentPart++;
+                            setTimeout(typeChar, 500); // Pause after adding username
+                        } else {
+                            // For regular text, type character by character
+                            if (currentChar < part.text.length) {
+                                welcomeMessage.innerHTML += part.text.charAt(currentChar);
+                                currentChar++;
+                                setTimeout(typeChar, 100);
+                            } else {
+                                // Move to next part
+                                currentPart++;
+                                currentChar = 0;
+                                setTimeout(typeChar, 50);
+                            }
+                        }
+                    } else {
+                        // All parts typed, update cursor position and add pulse effect
+                        typingContainer.style.setProperty('--cursor-right', '0');
+                        setTimeout(() => {
+                            welcomeMessage.querySelector('.username').style.animation = 'pulse 2s ease-in-out';
+                            // Hide the cursor after animation completes
+                            setTimeout(() => {
+                                typingContainer.style.setProperty('--cursor-display', 'none');
+                            }, 2000);
+                        }, 500);
+                    }
+                }
+            };
+            
+            typeChar();
+        }, 500);
     }
 
     // Fade in the content
     document.body.style.opacity = '1';
-    document.body.style.transition = 'opacity 0.5s ease';
-
-    // Initialize particles
-    createParticles();
+    document.body.style.transition = 'opacity 0.8s ease';
 
     // Feature cards click handlers
     document.querySelectorAll('.feature-card').forEach(card => {
         card.addEventListener('click', () => {
             const feature = card.dataset.feature;
             navigateToFeature(feature);
+        });
+        
+        // Add hover particle effects
+        card.addEventListener('mouseenter', () => {
+            const rect = card.getBoundingClientRect();
+            createParticleEffect(rect.left + rect.width/2, rect.top + rect.height/2, 5);
         });
     });
 
@@ -40,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clear local storage
             setTimeout(() => {
                 localStorage.removeItem('token');
+                localStorage.removeItem('userData');
                 localStorage.removeItem('username');
                 window.location.href = 'login.html';
             }, 500);
@@ -57,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 // Clear local storage
                 localStorage.removeItem('token');
+                localStorage.removeItem('userData');
                 localStorage.removeItem('username');
                 
                 // Redirect to login page
@@ -82,7 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function createParticles() {
-    const container = document.querySelector('.particle-container');
+    const container = document.querySelector('.particle-system');
+    if (!container) return;
+    
     const particleCount = 50;
 
     for (let i = 0; i < particleCount; i++) {
@@ -98,31 +181,92 @@ function createParticles() {
         particle.style.left = `${Math.random() * 100}%`;
         particle.style.top = `${Math.random() * 100}%`;
         
-        // Random animation delay
-        particle.style.animationDelay = `${Math.random() * 3}s`;
+        // Set up for animation
+        const tx = (Math.random() - 0.5) * 300;
+        const ty = (Math.random() - 0.5) * 300;
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        // Random animation duration and delay
+        const duration = Math.random() * 10 + 10;
+        const delay = Math.random() * 5;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
         
         container.appendChild(particle);
+    }
+    
+    // Add click effect for dynamic particles
+    document.addEventListener('click', createClickParticles);
+}
+
+function createClickParticles(e) {
+    const x = e.clientX;
+    const y = e.clientY;
+    
+    createParticleEffect(x, y, 8);
+}
+
+function createParticleEffect(x, y, count = 10, color = null) {
+    // Create particles at specified location
+    for (let i = 0; i < count; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Random size between 3 and 6 pixels
+        const size = Math.random() * 3 + 3;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Position at specified point
+        particle.style.position = 'fixed';
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        
+        // Random direction
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 80 + 20;
+        
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        // Set custom color if provided
+        if (color) {
+            particle.style.background = color;
+        }
+        
+        // Add to body
+        document.body.appendChild(particle);
+        
+        // Remove after animation completes
+        setTimeout(() => particle.remove(), 2000);
     }
 }
 
 function navigateToFeature(feature) {
     const animations = {
-        pomodoro: { icon: '⏰', color: '#4a90e2' },
-        planner: { icon: '📝', color: '#00bcd4' },
-        calendar: { icon: '📅', color: '#7e57c2' }
+        pomodoro: { icon: '⏰', color: '#DC143C' },
+        planner: { icon: '📝', color: '#FF4444' },
+        calendar: { icon: '📅', color: '#8B0000' }
     };
 
     const { icon, color } = animations[feature];
     
-    // Create floating icon animation
-    const floatingIcon = document.createElement('div');
-    floatingIcon.textContent = icon;
-    floatingIcon.style.position = 'fixed';
-    floatingIcon.style.fontSize = '2rem';
-    floatingIcon.style.zIndex = '1000';
-    document.body.appendChild(floatingIcon);
+    // Create particles at the card location
+    const card = document.querySelector(`[data-feature="${feature}"]`);
+    if (card) {
+        const rect = card.getBoundingClientRect();
+        createParticleEffect(rect.left + rect.width/2, rect.top + rect.height/2, 15, color);
+    }
 
-    // Animate and redirect
+    // Fade out effect
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.5s ease';
+
+    // Redirect
     setTimeout(() => {
         window.location.href = `${feature}.html`;
     }, 500);

@@ -1,4 +1,3 @@
-home.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +6,10 @@ home.html
     <title>Welcome to EduPlan</title>
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="particle-container"></div>
+    <div class="particle-system"></div>
     
     <nav class="navbar">
         <div class="logo-container">
@@ -20,7 +20,9 @@ home.html
             <ul class="nav-links">
                 <li><a href="home.html" class="active"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="pomodoro.html"><i class="fas fa-clock"></i> Timer</a></li>
-                <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="planner.html"><i class="fas fa-calendar-alt"></i> Planner</a></li>
+                <li><a href="calendar.html"><i class="fas fa-calendar-check"></i> Calendar</a></li>
+                <li><a href="compiler.html"><i class="fas fa-code"></i> Compiler</a></li>
                 <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
             </ul>
         </div>
@@ -33,7 +35,7 @@ home.html
 
     <main class="home-container">
         <div class="greeting-section">
-            <h1>Welcome Back, <span id="userDisplayName"></span>!</h1>
+            <h1><span class="typing-container"><span id="welcomeMessage"></span></span></h1>
             <p>What would you like to do today?</p>
         </div>
 
@@ -51,7 +53,7 @@ home.html
             </div>
             
             <div class="feature-card" data-feature="calendar">
-                <i class="fas fa-calendar-alt"></i>
+                <i class="fas fa-calendar-check"></i>
                 <h3>Calendar</h3>
                 <p>Track your schedule and deadlines</p>
             </div>

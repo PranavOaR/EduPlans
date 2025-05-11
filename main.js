@@ -1,4 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Check authentication status and update nav links
+    const isAuthenticated = localStorage.getItem('token') !== null;
+    
+    if (!isAuthenticated) {
+        // If not authenticated, redirect all nav links to login page
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Allow the following links to work normally
+                if (this.getAttribute('href') === 'login.html' || 
+                    this.getAttribute('href') === 'signup.html' ||
+                    this.getAttribute('href') === '#features' ||
+                    this.getAttribute('href').startsWith('#')) {
+                    return;
+                }
+                
+                e.preventDefault();
+                window.location.href = 'login.html';
+            });
+        });
+        
+        // Also modify feature card links to redirect to login
+        document.querySelectorAll('.feature-btn').forEach(btn => {
+            if (btn.getAttribute('href') !== 'login.html') {
+                btn.setAttribute('href', 'login.html');
+            }
+        });
+    }
+
     // Animate feature cards on scroll
     const cards = document.querySelectorAll('.feature-card');
     
@@ -21,22 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.transform = 'translateY(50px)';
         card.style.transition = 'all 0.6s ease-out';
         observer.observe(card);
-    });
-
-    // Handle nav link clicks
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // Add fade out animation
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
-            
-            // Redirect after animation
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 500);
-        });
     });
 
     // Add hover effect to nav links
@@ -75,26 +87,40 @@ document.addEventListener('DOMContentLoaded', () => {
         featuresSection.offsetHeight; // Trigger reflow
         featuresSection.style.animation = 'highlightSection 1s ease-out';
     });
+
+    createParticles();
+
+    // Handle CTA button
+    const ctaButton = document.getElementById('ctaButton');
+    if (ctaButton && !isAuthenticated) {
+        ctaButton.setAttribute('href', 'login.html');
+    }
 });
 
-function createParticle(parent) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    parent.appendChild(particle);
+function createParticles() {
+    const container = document.querySelector('.particle-system');
+    const particleCount = 50;
 
-    const size = Math.random() * 5 + 1;
-    const posX = Math.random() * 100;
-    const posY = Math.random() * 100;
-    const duration = Math.random() * 20 + 10;
-
-    particle.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        background: rgba(74, 144, 226, 0.2);
-        border-radius: 50%;
-        left: ${posX}%;
-        top: ${posY}%;
-        animation: float ${duration}s infinite linear;
-    `;
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        const size = Math.random() * 3 + 1;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.top = `${Math.random() * 100}vh`;
+        
+        const tx = (Math.random() - 0.5) * 300;
+        const ty = (Math.random() - 0.5) * 300;
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        const duration = Math.random() * 4 + 3;
+        const delay = Math.random() * 2;
+        particle.style.animation = `particle ${duration}s ${delay}s infinite`;
+        
+        container.appendChild(particle);
+    }
 }

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test - EduPlan</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h1 {
+            color: #DC143C;
+            border-bottom: 2px solid #DC143C;
+            padding-bottom: 10px;
+        }
+        button {
+            background-color: #DC143C;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 5px 10px 0;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #b01030;
+        }
+        .result {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+        .error {
+            background-color: #ffeeee;
+            border-color: #ffaaaa;
+        }
+        .success {
+            background-color: #eeffee;
+            border-color: #aaffaa;
+        }
+    </style>
+</head>
+<body>
+    <h1>EduPlan API Test</h1>
+    <p>Use the buttons below to test different API endpoints.</p>
+    
+    <div>
+        <button id="testHealth">Test Server Health</button>
+        <button id="testLogin">Test Login API</button>
+        <button id="testVerifyToken">Test Token Verification</button>
+        <button id="createTestUser">Create Test User</button>
+        <button id="clearStorage">Clear Local Storage</button>
+    </div>
+    
+    <div id="result" class="result">Results will appear here...</div>
+    
+    <script>
+        // Helper to display results
+        function showResult(data, isError = false) {
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = typeof data === 'object' ? JSON.stringify(data, null, 2) : data.toString();
+            resultElement.className = `result ${isError ? 'error' : 'success'}`;
+        }
+        
+        // Health check
+        document.getElementById('testHealth').addEventListener('click', async () => {
+            try {
+                const response = await fetch('http://localhost:5000/health');
+                const data = await response.json();
+                showResult({
+                    status: response.status,
+                    statusText: response.statusText,
+                    data
+                });
+            } catch (error) {
+                showResult(`Error: ${error.message}`, true);
+            }
+        });
+        
+        // Login test
+        document.getElementById('testLogin').addEventListener('click', async () => {
+            try {
+                // Demo credentials - replace with valid ones
+                const credentials = {
+                    email: 'test@example.com',
+                    password: 'test123'
+                };
+                
+                const response = await fetch('http://localhost:5000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(credentials)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('userData', JSON.stringify(data.user));
+                }
+                
+                showResult({
+                    status: response.status,
+                    statusText: response.statusText,
+                    data,
+                    tokenStored: response.ok ? 'Yes' : 'No'
+                });
+            } catch (error) {
+                showResult(`Error: ${error.message}`, true);
+            }
+        });
+        
+        // Token verification
+        document.getElementById('testVerifyToken').addEventListener('click', async () => {
+            try {
+                const token = localStorage.getItem('token');
+                
+                if (!token) {
+                    showResult('No token found in localStorage', true);
+                    return;
+                }
+                
+                const response = await fetch('http://localhost:5000/api/auth/verify-token', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                showResult({
+                    status: response.status,
+                    statusText: response.statusText,
+                    data
+                });
+            } catch (error) {
+                showResult(`Error: ${error.message}`, true);
+            }
+        });
+        
+        // Create test user
+        document.getElementById('createTestUser').addEventListener('click', async () => {
+            try {
+                const testUser = {
+                    username: 'testuser',
+                    email: 'test@example.com',
+                    password: 'test123',
+                    firstName: 'Test',
+                    lastName: 'User',
+                    mobile: '1234567890'
+                };
+                
+                const response = await fetch('http://localhost:5000/api/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testUser)
+                });
+                
+                const data = await response.json();
+                showResult({
+                    status: response.status,
+                    statusText: response.statusText,
+                    data
+                });
+            } catch (error) {
+                showResult(`Error: ${error.message}`, true);
+            }
+        });
+        
+        // Clear storage
+        document.getElementById('clearStorage').addEventListener('click', () => {
+            localStorage.clear();
+            showResult('Local storage cleared.');
+        });
+    </script>
+</body>
+</html> 

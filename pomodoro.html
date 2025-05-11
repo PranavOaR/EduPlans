@@ -7,46 +7,107 @@
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="pomodoro.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar dark-theme">
-        <div class="logo">EduPlan</div>
+    <div class="particle-system"></div>
+    
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <img src="./edu.png" alt="EduPlan Logo" class="nav-logo">
+            <span>EduPlan</span>
+        </div>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="pomodoro.html" class="active">Pomodoro Timer</a></li>
-            <li><a href="planner.html">Topic Planner</a></li>
+            <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="pomodoro.html" class="active"><i class="fas fa-clock"></i> Timer</a></li>
+            <li><a href="planner.html"><i class="fas fa-calendar-alt"></i> Planner</a></li>
+            <li><a href="calendar.html"><i class="fas fa-calendar-check"></i> Calendar</a></li>
+            <li><a href="compiler.html"><i class="fas fa-code"></i> Compiler</a></li>
+            <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
         </ul>
     </nav>
 
-    <div class="pomodoro-container">
-        <div class="timer-wrapper">
-            <div class="timer-display">
-                <span id="minutes">25</span>:<span id="seconds">00</span>
+    <div class="main-container">
+        <div class="pomodoro-container">
+            <h2 class="section-title">Focus Timer</h2>
+            
+            <div class="timer-wrapper">
+                <div class="progress-ring-container">
+                    <svg class="progress-ring" width="260" height="260">
+                        <circle class="progress-ring-circle-bg" cx="130" cy="130" r="110" />
+                        <circle class="progress-ring-circle" cx="130" cy="130" r="110" />
+                    </svg>
+                    <div class="timer-display-container">
+                        <div class="timer-display">
+                            <span id="minutes">25</span><span class="timer-colon">:</span><span id="seconds">00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timer-controls">
+                    <button id="start" class="timer-btn"><i class="fas fa-play"></i></button>
+                    <button id="pause" class="timer-btn"><i class="fas fa-pause"></i></button>
+                    <button id="reset" class="timer-btn"><i class="fas fa-redo"></i></button>
+                </div>
             </div>
-            <div class="timer-controls">
-                <button id="start" class="timer-btn"><i class="fas fa-play"></i></button>
-                <button id="pause" class="timer-btn"><i class="fas fa-pause"></i></button>
-                <button id="reset" class="timer-btn"><i class="fas fa-redo"></i></button>
+
+            <div class="session-settings">
+                <div class="setting">
+                    <label for="workTime">Work Time (minutes):</label>
+                    <div class="number-input">
+                        <button class="decrement">-</button>
+                        <input type="number" id="workTime" value="25" min="1" max="60">
+                        <button class="increment">+</button>
+                    </div>
+                </div>
+                <div class="setting">
+                    <label for="breakTime">Break Time (minutes):</label>
+                    <div class="number-input">
+                        <button class="decrement">-</button>
+                        <input type="number" id="breakTime" value="5" min="1" max="30">
+                        <button class="increment">+</button>
+                    </div>
+                </div>
+                <div class="setting">
+                    <label for="longBreakTime">Long Break (minutes):</label>
+                    <div class="number-input">
+                        <button class="decrement">-</button>
+                        <input type="number" id="longBreakTime" value="15" min="1" max="60">
+                        <button class="increment">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="session-info">
+                <div class="status-badge" id="session-type">Work Session</div>
+                <p id="session-count">Session #1 of 4</p>
             </div>
         </div>
 
-        <div class="session-settings">
-            <div class="setting">
-                <label for="workTime">Work Time (minutes):</label>
-                <input type="number" id="workTime" value="25" min="1" max="60">
+        <div class="todo-container">
+            <h2 class="section-title">My Tasks</h2>
+            <div class="todo-form">
+                <input type="text" id="todo-input" placeholder="Add a new task...">
+                <button id="add-todo" class="primary-btn"><i class="fas fa-plus"></i></button>
             </div>
-            <div class="setting">
-                <label for="breakTime">Break Time (minutes):</label>
-                <input type="number" id="breakTime" value="5" min="1" max="30">
+            <div class="todos-wrapper">
+                <div id="todo-list" class="todo-list">
+                    <!-- Tasks will be added here by JavaScript -->
+                </div>
+                <div class="todo-stats">
+                    <span id="tasks-completed">0</span> of <span id="tasks-total">0</span> tasks completed
+                </div>
             </div>
-        </div>
-
-        <div class="session-info">
-            <p id="session-type">Work Session</p>
-            <p id="session-count">Session #1</p>
         </div>
     </div>
 
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <i class="fas fa-bell"></i>
+            <span id="notification-message">Session Complete!</span>
+        </div>
+    </div>
+    
+    <script src="main.js"></script>
     <script src="pomodoro.js"></script>
 </body>
 </html>

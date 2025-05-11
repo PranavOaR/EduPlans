@@ -1,4 +1,3 @@
-anner.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,40 +7,73 @@ anner.html
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="planner.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo-container">
-            <img src="edu.png" alt="EduPlan Logo" class="logo-img">
-            <a href="index.html" class="logo">EduPlan</a>
+    <div class="particle-system"></div>
+
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <img src="./edu.png" alt="EduPlan Logo" class="nav-logo">
+            <span>EduPlan</span>
         </div>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="pomodoro.html">Pomodoro Timer</a></li>
-            <li><a href="planner.html" class="active">Topic Planner</a></li>
+            <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="pomodoro.html"><i class="fas fa-clock"></i> Timer</a></li>
+            <li><a href="planner.html" class="active"><i class="fas fa-calendar-alt"></i> Planner</a></li>
+            <li><a href="calendar.html"><i class="fas fa-calendar-check"></i> Calendar</a></li>
+            <li><a href="compiler.html"><i class="fas fa-code"></i> Compiler</a></li>
+            <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
         </ul>
     </nav>
 
     <div class="planner-wrapper">
         <div class="planner-container">
             <div class="add-task-section">
-                <h2>Add New Task</h2>
+                <h2 class="section-title">Add New Task</h2>
                 <form id="task-form">
-                    <input type="text" id="task-title" placeholder="Task Title" required>
-                    <select id="task-subject" required>
-                        <option value="">Select Subject</option>
-                        <option value="math">Mathematics</option>
-                        <option value="science">Science</option>
-                        <option value="english">English</option>
-                        <option value="history">History</option>
-                    </select>
-                    <input type="date" id="task-due-date" required>
-                    <select id="task-priority" required>
-                        <option value="low">Low Priority</option>
-                        <option value="medium">Medium Priority</option>
-                        <option value="high">High Priority</option>
-                    </select>
-                    <textarea id="task-description" placeholder="Task Description" required></textarea>
+                    <div class="form-group">
+                        <label for="task-title">Task Title</label>
+                        <input type="text" id="task-title" placeholder="Enter task title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="task-subject">Subject</label>
+                        <select id="task-subject" required>
+                            <option value="">Select Subject</option>
+                            <option value="math">Mathematics</option>
+                            <option value="science">Science</option>
+                            <option value="english">English</option>
+                            <option value="history">History</option>
+                            <option value="computer">Computer Science</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="biology">Biology</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="task-due-date">Due Date</label>
+                            <input type="date" id="task-due-date" required>
+                        </div>
+                        
+                        <div class="form-group half">
+                            <label for="task-priority">Priority</label>
+                            <select id="task-priority" required>
+                                <option value="low">Low Priority</option>
+                                <option value="medium">Medium Priority</option>
+                                <option value="high">High Priority</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="task-description">Description</label>
+                        <textarea id="task-description" placeholder="Describe your task" required></textarea>
+                    </div>
+                    
                     <button type="submit" class="add-btn">
                         <i class="fas fa-plus"></i> Add Task
                     </button>
@@ -50,18 +82,63 @@ anner.html
 
             <div class="tasks-container">
                 <div class="tasks-header">
-                    <h2>Your Tasks</h2>
+                    <h2 class="section-title">Your Tasks</h2>
                     <div class="filter-options">
-                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn active" data-filter="all">All Tasks</button>
                         <button class="filter-btn" data-filter="pending">Pending</button>
                         <button class="filter-btn" data-filter="completed">Completed</button>
                     </div>
                 </div>
-                <div id="tasks-list"></div>
+                
+                <div class="tasks-dashboard">
+                    <div class="task-stats">
+                        <div class="stat-card">
+                            <span class="stat-icon"><i class="fas fa-list-check"></i></span>
+                            <div class="stat-details">
+                                <h3 id="total-count">0</h3>
+                                <p>Total Tasks</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-icon"><i class="fas fa-clock"></i></span>
+                            <div class="stat-details">
+                                <h3 id="pending-count">0</h3>
+                                <p>Pending</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-icon"><i class="fas fa-check-circle"></i></span>
+                            <div class="stat-details">
+                                <h3 id="completed-count">0</h3>
+                                <p>Completed</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="task-search" placeholder="Search tasks...">
+                    </div>
+                </div>
+                
+                <div id="tasks-list" class="tasks-list"></div>
+                
+                <div class="empty-state" id="empty-state">
+                    <i class="fas fa-clipboard-list"></i>
+                    <p>No tasks found. Add a new task to get started!</p>
+                </div>
             </div>
         </div>
     </div>
 
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="notification-message">Task completed successfully!</span>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
     <script src="planner.js"></script>
 </body>
 </html>

@@ -2,14 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Calendar - EduPlan</title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="calendar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="particle-container"></div>
+    <div class="particle-system"></div>
+    
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <img src="./edu.png" alt="EduPlan Logo" class="nav-logo">
+            <span>EduPlan</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="pomodoro.html"><i class="fas fa-clock"></i> Timer</a></li>
+            <li><a href="planner.html"><i class="fas fa-calendar-alt"></i> Planner</a></li>
+            <li><a href="calendar.html" class="active"><i class="fas fa-calendar-check"></i> Calendar</a></li>
+            <li><a href="compiler.html"><i class="fas fa-code"></i> Compiler</a></li>
+            <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+        </ul>
+    </nav>
     
     <div class="calendar-wrapper">
         <div class="calendar-container">
@@ -38,7 +54,7 @@
         </div>
 
         <div class="event-sidebar">
-            <h2>Upcoming Events</h2>
+            <h2><i class="fas fa-calendar-alt"></i> Upcoming Events</h2>
             <div id="eventsList" class="events-list">
                 <!-- Events will be dynamically added here -->
             </div>
@@ -63,12 +79,14 @@
                 </div>
                 <div class="form-group">
                     <label for="eventType">Event Type</label>
-                    <select id="eventType" required>
-                        <option value="assignment">Assignment</option>
-                        <option value="exam">Exam</option>
-                        <option value="study">Study Session</option>
-                        <option value="meeting">Meeting</option>
-                    </select>
+                    <div class="custom-select">
+                        <select id="eventType" required>
+                            <option value="assignment">Assignment</option>
+                            <option value="exam">Exam</option>
+                            <option value="study">Study Session</option>
+                            <option value="meeting">Meeting</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="eventDescription">Description</label>
@@ -86,6 +104,14 @@
         </div>
     </div>
 
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <i class="fas fa-check"></i>
+            <span id="notification-message">Event added successfully!</span>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
     <script src="calendar.js"></script>
 </body>
 </html>

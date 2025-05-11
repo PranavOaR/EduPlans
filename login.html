@@ -1,38 +1,45 @@
-\login.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - EduPlan</title>
-    <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="login-container">
+        <div class="particle-system"></div>
         <div class="login-card">
             <div class="logo-section">
                 <img src="edu.png" alt="EduPlan Logo" class="login-logo">
-                <h1>EduPlan</h1>
+                <h1>Welcome Back</h1>
             </div>
             <form id="loginForm" class="login-form">
                 <div class="input-group">
-                    <i class="fas fa-user"></i>
                     <input type="email" id="email" placeholder="Email" required>
+                    <i class="fas fa-envelope"></i>
                 </div>
                 <div class="input-group">
-                    <i class="fas fa-lock"></i>
                     <input type="password" id="password" placeholder="Password" required>
+                    <i class="fas fa-lock"></i>
                 </div>
-                <button type="submit" class="login-btn">Login</button>
+                <button type="submit" id="loginSubmitBtn" class="login-btn">
+                    <span>Login</span>
+                </button>
                 <div class="form-footer">
-                    <a href="forgot.html" class="forgot-password">Forgot Password?</a>
-                    <a href="signup.html" class="create-account">Create Account</a>
+                    <a href="forgot.html" class="forgot-link">Forgot Password?</a>
+                    <a href="signup.html" class="signup-link">Create Account</a>
                 </div>
             </form>
         </div>
     </div>
     <script src="login.js"></script>
+    <script src="loginTest.js"></script>
+    <!-- Debug script temporarily removed for troubleshooting -->
+    <!-- <script src="debugLogin.js"></script> -->
 </body>
 </html>
