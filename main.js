@@ -56,6 +56,25 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 50; i++) {
         createParticle(hero);
     }
+
+    // Handle smooth scroll for explore features button
+    document.querySelector('a[href="#features"]').addEventListener('click', (e) => {
+        e.preventDefault();
+        const featuresSection = document.getElementById('features');
+        const offset = 80; // Adjust this value to account for fixed navbar height
+        
+        const targetPosition = featuresSection.getBoundingClientRect().top + window.pageYOffset - offset;
+        
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+
+        // Add highlight animation to features section
+        featuresSection.style.animation = 'none';
+        featuresSection.offsetHeight; // Trigger reflow
+        featuresSection.style.animation = 'highlightSection 1s ease-out';
+    });
 });
 
 function createParticle(parent) {
