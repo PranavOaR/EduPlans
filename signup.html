@@ -44,13 +44,45 @@
                 <button type="submit" class="signup-btn">
                     <i class="fas fa-user-plus"></i> Create Account
                 </button>
+                
+                <div class="separator">
+                    <span>OR</span>
+                </div>
+                
+                <button type="button" class="google-btn" id="customGoogleBtn">
+                    <img src="google.png" alt="Google logo" class="google-icon">
+                    <span>Sign up with Google</span>
+                </button>
+                
+                <div id="google-signin-container" style="height: 0; width: 0; overflow: hidden; position: absolute; z-index: -1;">
+                    <div id="g_id_onload"
+                         data-client_id="883150394413-83e6lkhanhs72j87cps4p6f5tlvk7a63.apps.googleusercontent.com"
+                         data-callback="handleGoogleSignIn"
+                         data-context="signup"
+                         data-ux_mode="popup"
+                         data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-shape="rectangular"
+                         data-theme="outline"
+                         data-text="signup_with"
+                         data-size="large"
+                         data-width="300"
+                         data-logo_alignment="center">
+                    </div>
+                </div>
             </form>
             <div class="form-footer">
                 <a href="login.html">Already have an account? Login</a>
             </div>
         </div>
     </div>
+    
+    <!-- Load scripts in the correct order -->
     <script src="config.js"></script>
     <script src="signup.js"></script>
+    <script src="debug.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </body>
 </html>

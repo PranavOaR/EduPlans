@@ -51,12 +51,12 @@ body {
 
 .signup-card {
     background: linear-gradient(145deg, var(--card-bg), rgba(139, 0, 0, 0.2));
-    padding: 2rem;
+    padding: 1.8rem 3rem;
     border-radius: 20px;
     box-shadow: 0 4px 25px rgba(220, 20, 60, 0.25),
                 0 0 50px rgba(220, 20, 60, 0.15);
     width: 100%;
-    max-width: 380px;
+    max-width: 420px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(220, 20, 60, 0.2);
     animation: fadeIn 0.5s ease;
@@ -68,19 +68,19 @@ body {
 
 .logo-section {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .signup-logo {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 0.5rem;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.3rem;
     animation: float 3s ease-in-out infinite;
 }
 
 .logo-section h1 {
     color: var(--light-red);
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin: 0;
     text-shadow: 0 0 15px rgba(220, 20, 60, 0.3);
     background: linear-gradient(45deg, var(--light-red), var(--accent-red));
@@ -92,19 +92,19 @@ body {
 .signup-form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.7rem;
 }
 
 .input-group {
     position: relative;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.15rem;
     width: 100%;
     box-sizing: border-box;
 }
 
 .input-group input {
     width: 100%;
-    padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+    padding: 0.7rem 0.7rem 0.7rem 2.5rem;
     border: 1px solid rgba(220, 20, 60, 0.2);
     border-radius: 10px;
     background: rgba(18, 18, 18, 0.8);
@@ -160,9 +160,96 @@ body {
     background: var(--gradient-hover);
 }
 
+/* Google sign-in button */
+.google-btn {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 1.5rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border: 1px solid #dadce0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.google-btn:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    background-color: #f8f8f8;
+}
+
+.google-btn:active {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    transform: translateY(0);
+}
+
+.google-btn img.google-icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 16px;
+    margin-right: 24px;
+}
+
+.google-btn span {
+    color: #3c4043;
+    font-size: 16px;
+    font-weight: 500;
+    flex-grow: 1;
+    text-align: center;
+    padding-right: 30px;
+}
+
+.google-signin-wrapper {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Hide the actual Google button but keep it clickable */
+.g_id_signin {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0.001;
+    z-index: -1;
+    pointer-events: auto;
+}
+
+/* Separator style */
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.2rem 0;
+    color: var(--text-secondary);
+}
+
+.separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(220, 20, 60, 0.2);
+}
+
+.separator span {
+    padding: 0 10px;
+    font-size: 0.9rem;
+}
+
 .form-footer {
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: 1.2rem;
 }
 
 .form-footer a {
@@ -184,6 +271,17 @@ body {
     border-radius: 8px;
     margin-bottom: 0.7rem;
     border: 1px solid rgba(40, 167, 69, 0.2);
+    animation: slideDown 0.3s ease-out;
+    font-size: 0.9rem;
+}
+
+.info-message {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+    padding: 0.7rem;
+    border-radius: 8px;
+    margin-bottom: 0.7rem;
+    border: 1px solid rgba(23, 162, 184, 0.2);
     animation: slideDown 0.3s ease-out;
     font-size: 0.9rem;
 }
@@ -240,11 +338,101 @@ body {
     75% { transform: translateX(5px); }
 }
 
+/* Responsive adjustments for larger screens */
+@media (min-width: 768px) {
+    .signup-card {
+        max-width: 520px;
+        padding: 2rem 3.5rem;
+    }
+    
+    .logo-section {
+        margin-bottom: 1.5rem;
+    }
+    
+    .signup-logo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .logo-section h1 {
+        font-size: 2rem;
+    }
+    
+    .input-group {
+        margin-bottom: 0.3rem;
+    }
+    
+    .input-group input {
+        padding: 0.8rem 0.8rem 0.8rem 2.8rem;
+        font-size: 1rem;
+    }
+    
+    .signup-btn {
+        padding: 0.9rem;
+        font-size: 1.1rem;
+        margin-top: 1.2rem;
+    }
+    
+    .google-btn {
+        height: 50px;
+    }
+    
+    .signup-form {
+        gap: 0.8rem;
+    }
+}
+
+/* Even wider screens */
+@media (min-width: 1200px) {
+    .signup-card {
+        max-width: 600px;
+        padding: 2.5rem 4rem;
+    }
+    
+    /* Create a two-column layout for inputs on very wide screens */
+    .signup-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem 1.5rem;
+    }
+    
+    /* Full width items */
+    .signup-form .input-group:nth-child(5),  /* Mobile */
+    .signup-form .input-group:nth-child(6),  /* Password */
+    .signup-form .signup-btn,
+    .signup-form .separator,
+    .signup-form .google-btn {
+        grid-column: 1 / span 2;
+    }
+}
+
+/* Extra wide screens */
+@media (min-width: 1600px) {
+    .signup-card {
+        max-width: 650px;
+        padding: 3.5rem 4.5rem;
+    }
+    
+    .logo-section h1 {
+        font-size: 2.5rem;
+    }
+    
+    .input-group input {
+        padding: 1.2rem 1.2rem 1.2rem 3rem;
+        font-size: 1.1rem;
+    }
+    
+    .signup-btn {
+        padding: 1.2rem;
+        font-size: 1.2rem;
+    }
+}
+
+/* Smaller screens */
 @media (max-width: 480px) {
     .signup-card {
         padding: 1.5rem;
         margin: 1rem;
-        max-width: 320px;
     }
     
     .input-group input {
@@ -254,7 +442,6 @@ body {
     
     .input-group i {
         left: 0.7rem;
-        font-size: 0.9rem;
     }
     
     .signup-btn {

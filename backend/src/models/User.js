@@ -27,13 +27,27 @@ const userSchema = new mongoose.Schema({
     },
     mobile: {
         type: String,
-        required: true,
+        required: function() {
+            // Only required for non-Google users
+            return !this.googleId;
+        },
         trim: true
     },
     password: {
         type: String,
-        required: true,
+        required: function() {
+            // Only required for non-Google users
+            return !this.googleId;
+        },
         minlength: 6
+    },
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true
+    },
+    profilePicture: {
+        type: String
     },
     resetToken: String,
     resetTokenExpiry: Date
@@ -42,7 +56,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function(next) {
-    if (this.isModified('password')) {
+    if (this.isModified('password') && this.password) {
         this.password = await bcrypt.hash(this.password, 10);
     }
     next();

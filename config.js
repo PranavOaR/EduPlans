@@ -14,6 +14,7 @@ const config = {
         auth: {
             login: '/api/auth/login',
             signup: '/api/auth/signup',
+            googleAuth: '/api/auth/google',
             forgotPassword: '/api/auth/forgot-password',
             resetPassword: '/api/auth/reset-password',
             verifyToken: '/api/auth/verify-token'
@@ -21,6 +22,11 @@ const config = {
         profile: {
             me: '/api/me'
         }
+    },
+    
+    // Google Authentication
+    googleAuth: {
+        clientId: '883150394413-83e6lkhanhs72j87cps4p6f5tlvk7a63.apps.googleusercontent.com',
     }
 };
 
@@ -35,8 +41,8 @@ function getApiUrl() {
         !window.location.hostname.startsWith('192.168.')) {
         
         // For Render deployment, get the URL from the rendered site domain
-        // This assumes the backend is deployed at <name>-api.onrender.com
-        // and the frontend is at <name>.onrender.com
+        // This assumes the backend is deployed at <n>-api.onrender.com
+        // and the frontend is at <n>.onrender.com
         const frontendDomain = window.location.hostname;
         if (frontendDomain.includes('.onrender.com')) {
             const projectName = frontendDomain.split('.')[0];
